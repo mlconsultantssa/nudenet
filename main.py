@@ -23,13 +23,14 @@
 
 # Import module
 from NudeNet.nudenet import NudeDetector
-import numpy as np
-import matplotlib.pyplot as plt
+#import numpy as np
+#import matplotlib.pyplot as plt
 from imgcoord import ImgCoord
 from imagehandle import ImgHandle
 # path to the folder with images to use
-path = r"C:\Users\user\Desktop\01-MACHINE_LEARNING\04-MLC\nudenet\nudes\*.*"
-save_path = r"C:\Users\user\Desktop\01-MACHINE_LEARNING\04-MLC\nudenet\nudes\Nude_1"+"_sensor"+".PNG"
+path = r"C:\Users\user\Desktop\nudes\*.*"
+save_path = r"C:\Users\user\Desktop\nudes_no_more"
+nono_parts = ["EXPOSED_ANUS", "EXPOSED_BUTTOCKS", "EXPOSED_BREAST_F", "EXPOSED_GENITALIA_F", "EXPOSED_GENITALIA_M"] #options: EXPOSED_ANUS EXPOSED_ARMPITS COVERED_BELLY EXPOSED_BELLY COVERED_BUTTOCKS EXPOSED_BUTTOCKS FACE_F FACE_M COVERED_FEET EXPOSED_FEET COVERED_BREAST_F EXPOSED_BREAST_F COVERED_GENITALIA_F EXPOSED_GENITALIA_F EXPOSED_BREAST_M EXPOSED_GENITALIA_M
 
 # initialize class to with functions to get image coords, passing 
 img_coord = ImgCoord(path)
@@ -47,7 +48,7 @@ for image_path in path_list:
     # first we get the coords
     naughty_coords_original = detector.detect(image_path)# Detect single image
     if len(naughty_coords_original)> 0:
-        coord_list = img_coord.alter_coords(naughty_coords_original)
+        coord_list = img_coord.alter_coords(naughty_coords_original, nono_parts)
         # now we alter the image
         img_handle.place_blocks(image_path,coord_list, save_path)
 

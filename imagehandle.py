@@ -1,5 +1,5 @@
 import skimage as ski
-import numpy as np
+#import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -14,11 +14,27 @@ class ImgHandle:
         """places blocks over the naughty bits in an image and saves"""
         img = ski.io.imread(image_path)
         for block in coord_list:
-            img[block[1]:block[3], block[0]:block[2]] = (0,0,0,225)
+            if img.shape[2] == 4:
+                img[block[1]:block[3], block[0]:block[2]] = (0,0,0,225)
+            
+            else:
+                img[block[1]:block[3], block[0]:block[2]] = (0,0,0)
 
-        ski.io.imsave(save_path, img)
+        save_path_alter = self.add_file_name(save_path, image_path)
+        ski.io.imsave(save_path_alter, img)
         return 
 
+
+    def add_file_name(self, save_path, image_path):
+        """returns the save path with a filename and _sensor to it"""
+        # get the original file name
+        file_name = image_path.rsplit("\\", 1)[1]
+        file_name = file_name.rsplit(".", 1)[0]
+
+        # add file name to the save path
+        save_path_alter = save_path + "\\" + file_name + "_sensor.PNG"
+
+        return save_path_alter
 
 
 
