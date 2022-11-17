@@ -1,6 +1,6 @@
-import skimage as ski
+import skimage.io as ski
 #import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class ImgHandle:
@@ -12,7 +12,7 @@ class ImgHandle:
 
     def place_blocks(self, image_path, coord_list, save_path):
         """places blocks over the naughty bits in an image and saves"""
-        img = ski.io.imread(image_path)
+        img = ski.imread(image_path)
         for block in coord_list:
             if img.shape[2] == 4:
                 img[block[1]:block[3], block[0]:block[2]] = (0,0,0,225)
@@ -21,7 +21,7 @@ class ImgHandle:
                 img[block[1]:block[3], block[0]:block[2]] = (0,0,0)
 
         save_path_alter = self.add_file_name(save_path, image_path)
-        ski.io.imsave(save_path_alter, img)
+        ski.imsave(save_path_alter, img)
         return 
 
 
